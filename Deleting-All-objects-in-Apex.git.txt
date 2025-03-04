@@ -1,0 +1,21 @@
+begin 
+    for a in (select table_name from object_users) 
+    loop
+        execute immediate 'alter table "'|| a.table_name || '"disable all triggers';
+    end loop;
+
+    for obj in (select object_name , object_types from user_objects order by object_type desc)
+    loop
+        begin 
+            if obj.object_type = 'table' then 
+
+             execute immediate 'drop'  obj.object_type  ' "'  obj.object_name  '"cascade constraints';
+            else 
+                execute immediate 'drop'  obj.object_type  ' "'  obj.object_name  '"force';
+            end if;
+            
+        exception 
+                 when others then continue;
+                end;
+    end loop;
+end;
