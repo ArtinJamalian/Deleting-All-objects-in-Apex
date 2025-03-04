@@ -1,0 +1,1 @@
+# Deleting-All-objects-in-Apex
