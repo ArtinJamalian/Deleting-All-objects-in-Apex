@@ -13,8 +13,7 @@ begin
                 execute immediate 'DROP ' || obj.object_type || ' "' || obj.object_name || '" FORCE';
             end if;
         exception 
-            when others then 
-                null; -- Optional: log or handle the error
+            when others then continue; 
         end;
     end loop;
 end;
